@@ -1,0 +1,211 @@
+openapi: 3.0.0
+info:
+  title: Ben Morgan Car Shop Project
+  # https://editor.swagger.io/
+  version: 1.0.0
+paths:
+  /cars:
+    get:
+      summary: Get all cars
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/car'
+        '400':
+          description: No cars found
+        '500':
+          description: Internal server error
+
+    post:
+      summary: Create a new car
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/car'
+      responses:
+        '201':
+          description: car created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        '500':
+          description: Internal server error
+
+  /cars/:id:
+    get:
+      summary: Get car(s) by parameter (Make, model, VIN, etc..)
+      parameters:
+        - in: path
+          name: _id
+          schema:
+            type: number
+        - in: path
+          name: VIN
+          schema:
+            type: string
+        - in: path
+          name: Make
+          schema:
+            type: string
+        - in: path
+          name: Model
+          schema:
+            type: string
+        - in: path
+          name: Year
+          schema:
+            type: integer
+        - in: path
+          name: Plate
+          schema:
+            type: string
+        - in: path
+          name: State
+          schema:
+            type: string
+        - in: path
+          name: Owner
+          schema:
+            type: string
+        - in: path
+          name: License
+          schema:
+            type: string
+        - in: path
+          name: Shop
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/car'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal server error
+    put:
+      summary: Update car by parameter (id, VIN, Plate)
+      parameters:
+        - in: path
+          name: _id
+          schema:
+            type: number
+        - in: path
+          name: VIN
+          schema:
+            type: string
+        - in: path
+          name: Plate
+          schema:
+            type: string
+      requestBody:
+        required: true
+        description: For PUT operation, not all fields need to be filled out. Only those listed in the request body will be updated.
+        content:
+          application/jason:
+            schema:
+              $ref: '#/components/schemas/car'
+      responses:
+        '201':
+          description: car updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        '500':
+          description: Internal server error
+
+    delete:
+      summary: Deletes car by parameter (id, VIN, Plate)
+      parameters:
+        - in: path
+          name: _id
+          schema:
+            type: number
+        - in: path
+          name: VIN
+          schema:
+            type: string
+        - in: path
+          name: Plate
+          schema:
+            type: string
+      responses:
+        '200':
+          description:  car was deleted
+  /parts/:partNumber:
+    get:
+      summary: Get part information by part number using SOAP server
+      parameters:
+        - in: path
+          name: partNumber
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  partNumber:
+                    type: string
+                  price:
+                    type: number
+                  deliveryDate:
+                    type: string
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal server error
+components:
+  schemas:
+    car:
+      type: object
+      properties:
+        VIN:
+          type: string
+        Make:
+          type: string
+        Model:
+          type: string
+        Year:
+          type: integer
+        Plate:
+          type: string
+        State:
+          type: string
+        Owner:
+          type: string
+        License:
+          type: string
+        Address:
+          type: string
+        Problem:
+          type: string
+        Shop:
+          type: string
+        Date:
+          type: string
+    part:
+      type: object
+      properties:
+        partNumber:
+          type: string

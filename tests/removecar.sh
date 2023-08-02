@@ -1,0 +1,1 @@
+curl -X DELETE --location "http://localhost:3000/cars/L3G0"

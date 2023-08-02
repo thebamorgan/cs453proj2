@@ -1,0 +1,38 @@
+<definitions name="PartsService"
+             targetNamespace="http://www.examples.com/wsdl/PartsService.wsdl"
+             xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://www.examples.com/wsdl/PartsService.wsdl"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <message name="PartLookupRequest">
+        <part name="partNumber" type="xsd:string"/>
+    </message>
+    <message name="PartLookupResponse">
+        <part name="price" type="xsd:decimal"/>
+        <part name="deliveryDate" type="xsd:date"/>
+    </message>
+    <portType name="PartsPort">
+        <operation name="PartLookup">
+            <input message="tns:PartLookupRequest"/>
+            <output message="tns:PartLookupResponse"/>
+        </operation>
+    </portType>
+    <binding name="PartLookup_Binding" type="tns:PartsPort">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="PartLookup">
+            <soap:operation soapAction="PartLookup"/>
+            <input>
+                <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.examples.com/wsdl/PartsService.wsdl" use="encoded"/>
+            </input>
+            <output>
+                <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.examples.com/wsdl/PartsService.wsdl" use="encoded"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="PartsService">
+        <documentation>WSDL File for PartsService</documentation>
+        <port binding="tns:PartLookup_Binding" name="PartsPort">
+            <soap:address location="http://soapapp:8000/PartLookup/"/>
+        </port>
+    </service>
+</definitions>

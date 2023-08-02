@@ -1,0 +1,1 @@
+curl -X GET --location "http://localhost:3000/cars/L3G0"
